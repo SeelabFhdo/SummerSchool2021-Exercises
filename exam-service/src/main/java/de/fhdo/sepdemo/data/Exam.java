@@ -1,10 +1,13 @@
 package de.fhdo.sepdemo.data;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Exam {
     private UUID id;
     private String name;
+    private List<Student> students = new ArrayList<>();
 
     //constructor
     public Exam(String name) {
@@ -25,4 +28,11 @@ public class Exam {
         this.name = name;
     }
 
+    public void addStudent(Student s) {
+        students.add(s);
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 // The controller maps all requests from the relative URL /examservice
 // E.g. https://localhost:8080/examservice
@@ -38,7 +39,7 @@ public class ExamRegistrationController {
     // Find a specific exam by its Id using the actual path
     // E.g. https://localhost:8080/examservice/exam/42
     @GetMapping("/exam/{id}")
-    public Optional<Exam> findExamById(@PathVariable Long id) {
+    public Optional<Exam> findExamById(@PathVariable UUID id) {
         return examService.findExamById(id);
     }
 
@@ -49,7 +50,7 @@ public class ExamRegistrationController {
     // objects of the given class
     // E.g. https://localhost:8080/examservice/exam/42/update
     @GetMapping("/exam/{id}/update")
-    public void updateExam(@RequestBody Student student, @PathVariable Long id) {
+    public void updateExam(@RequestBody Student student, @PathVariable UUID id) {
         examService.registerToExam(student, id);
     }
 
