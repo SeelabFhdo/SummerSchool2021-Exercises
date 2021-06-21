@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Exam Manager - Add Student</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+  <!-- Display exam from the model attribute "exam" (cf. WebController.addStudentEntryPoint()). -->
+  <b>Exam: </b> <span th:text="${exam.name}"></span>
+  <!--
+    Form with a button to send an HTTP POST request to the resource "/add-student/{id}" and thus yield a Spring
+    invocation of WebController.addStudent() (cf. the @PostMapping annotation on the method). The "th:object" will be
+    passed to the "student" parameter of WebController.addStudent() due to the @ModelAttribute annotation. The
+    "th:object" can be used to store the input values of fields in a form and communicate them back to the backend
+    controller method for further processing.
+  -->
+  <form action="#" th:action="@{/EXAMSERVICE/add-student/{id}(id = ${exam.id})}" th:object="${student}" method="post">
+    <input type="submit" value="Add Student">
+  </form>
+</body>
