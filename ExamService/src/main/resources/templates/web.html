@@ -1,0 +1,65 @@
+<!-- Template of the entry point web page (display exams and their student counts) -->
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Exam Manager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>Exam Manager</h1>
+
+    <!--
+        th:if is a Thymeleaf conditional to allow conditional rendering of HTML elements. For example, the following
+        h2-heading is only displayed, if no exams exist in our backend. The "exams" variable corresponds to the model
+        attribute "exams" set by the webEntryPoint() method in the WebController class.
+    -->
+    <h2 th:if="${exams} eq null or ${#lists.isEmpty(exams)}">No exams yet!</h2>
+
+    <!--
+        th:unless is a Thymeleaf conditional that evaluates to true if the passed predicate is false. That is, the
+        following div-element will only be displayed if there exist exams in the backend.
+    -->
+    <div th:unless="${exams} eq null or ${#lists.isEmpty(exams)}">
+        <h2>Exams</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Student Count</th>
+                <th>Add Student</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--
+                th:each allows continuous rendering of an HTML element based on the iteration through a collection. In
+                the given case, we create as much table rows (tr-elements) as there are exams.
+            -->
+            <tr th:each="exam : ${exams}">
+                <!--
+                    Display information about the current exam using th:text and Thymeleaf's property access syntax.
+                    For instance, the next td-element will display the ID of the current exam (i.e., Thymeleaf invokes
+                    Exam.getId() on the current exam).
+                -->
+                <td th:text="${exam.id}"></td>
+                <td th:text="${exam.name}"></td>
+                <td th:text="${exam.studentCount}"></td>
+                <td>
+                    <!--
+                        Add a form with a button to add a new student to the current exam. The form will send an HTTP
+                        GET request to the resource "/add-student/{id}" of the web application, whereby the path
+                        variable {id} is replaced with the ID of the current exam. As a result, Spring will invoke
+                        WebController.addStudentEntryPoint() (cf. the @GetMapping annotation on the method) with the ID
+                        of the current exam.
+                    -->
+                    <form action="#" th:action="@{/EXAMSERVICE/add-student/{id}(id = ${exam.id})}" method="get">
+                        <input type="submit" value="Add Student">
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
