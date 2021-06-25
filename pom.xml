@@ -6,8 +6,9 @@
 	<artifactId>management</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Management</name>
+    <packaging>pom</packaging>
 
-    <modules>>
+    <modules>
         <module>APIGateway</module>
         <module>ConfigurationService</module>
         <module>ExamService</module>
