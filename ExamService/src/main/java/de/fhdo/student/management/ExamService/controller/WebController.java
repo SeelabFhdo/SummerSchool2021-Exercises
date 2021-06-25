@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.annotation.PostConstruct;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +26,15 @@ public class WebController {
     @Autowired
     public WebController(ExamServiceI examService) {
         this.examService = examService;
+    }
+
+    @PostConstruct
+    public void init() {
+        var exam = new Exam();
+        exam.setName("Software Engineering Project");
+        exam.setDate(new Date());
+        exam.setDescription("Summer School Project.");
+        examService.createExam(exam);
     }
 
     /**
