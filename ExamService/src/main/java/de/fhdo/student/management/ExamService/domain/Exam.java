@@ -2,18 +2,36 @@ package de.fhdo.student.management.ExamService.domain;
 
 import org.springframework.data.annotation.Id;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Exam {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String description;
     private Date date;
 
+    private List<Student> students = new ArrayList<>();
+
     public Exam() {
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 
     public void setId(Long id) {
@@ -34,6 +52,10 @@ public class Exam {
 
     public String getName() {
         return name;
+    }
+
+    public void addStudent(Student student) {
+        students.add(student);
     }
 
     public void setName(String name) {
