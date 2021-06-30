@@ -39,8 +39,8 @@ public class ExamControllerApi {
         return examService.readAllExam();
     }
 
-   @DeleteMapping(value = "/exam")
-    public void deleteExam(Long id) {
+   @DeleteMapping(value = "/exam/{id}")
+    public void deleteExam(@PathVariable Long id) {
         examService.deleteExam(id);
     }
 }
